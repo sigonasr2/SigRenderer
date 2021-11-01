@@ -20,8 +20,8 @@ public class SigRenderer implements KeyListener,MouseListener,MouseMotionListene
     public static double dirY = 0;
     public static double planeX = 0;
     public static double planeY = 0.66;
-    public static double moveSpeed = 0.01;
-    public static double rotSpeed = Math.PI/64;
+    public static double moveSpeed = 0.1;
+    public static double rotSpeed = -Math.PI/64;
 
     boolean UP_KEY=false;
     boolean DOWN_KEY=false;

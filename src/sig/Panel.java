@@ -33,7 +33,7 @@ public class Panel extends JPanel{
             }
         }*/
 
-        final int h=64;
+        final int h=SigRenderer.SCREEN_HEIGHT;
 
         for (int x=0;x<SigRenderer.SCREEN_WIDTH;x++) {
             double cameraX = 2*x/(double)SigRenderer.SCREEN_WIDTH-1;
