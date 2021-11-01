@@ -1,5 +1,4 @@
 package sig;
-
 import javax.vecmath.Vector3d;
 
 public class Triangle {

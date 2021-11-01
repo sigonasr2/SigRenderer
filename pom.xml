@@ -8,7 +8,7 @@
   <artifactId>SigRenderer</artifactId>
   <version>0</version>
 
-  <name>sig.SigRenderer</name>
+  <name>SigRenderer</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
