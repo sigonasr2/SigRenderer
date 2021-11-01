@@ -8,7 +8,7 @@
   <artifactId>SigRenderer</artifactId>
   <version>0</version>
 
-  <name>SigRenderer</name>
+  <name>sig.SigRenderer</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,6 +26,7 @@
   </dependencies>
 
   <build>
+    <sourceDirectory>src</sourceDirectory>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -72,7 +73,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>main.java.LLSIG.LLSIG</mainClass>
+              <mainClass>sig.SigRenderer</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>

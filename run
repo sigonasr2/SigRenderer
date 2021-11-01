@@ -1,2 +1,2 @@
 mvn compile assembly:single
-java -jar target/LLSIG-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar target/SigRenderer-0-jar-with-dependencies.jar
