@@ -17,7 +17,7 @@ public class SigRenderer implements MouseListener,MouseMotionListener{
     }
 
     SigRenderer(JFrame f) {
-        tri = new Triangle(new Vector3D(),new Vector3D(),new Vector3D());
+        tri = new Triangle(new Vector3d(),new Vector3d(),new Vector3d());
         System.out.println(tri);   
 
         Panel p = new Panel();

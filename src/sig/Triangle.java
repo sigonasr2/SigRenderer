@@ -1,8 +1,10 @@
 package sig;
 
+import javax.vecmath.Vector3d;
+
 public class Triangle {
-    Vector3D A,B,C;
-    Triangle(Vector3D A,Vector3D B,Vector3D C) {
+    Vector3d A,B,C;
+    Triangle(Vector3d A,Vector3d B,Vector3d C) {
         this.A=A;
         this.B=B;
         this.C=C;
