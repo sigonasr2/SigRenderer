@@ -6,20 +6,23 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener; 
 
 public class SigRenderer implements MouseListener,MouseMotionListener{
-    Triangle tri;
+    public static Triangle tri;
+    public static Triangle tri2;
     public final static int SCREEN_WIDTH=1280;
     public final static int SCREEN_HEIGHT=720;
     public final static long TIMEPERTICK = 16666667l;
     public static double DRAWTIME=0;
+
+    Vector3d origin = new Vector3d(0,0,-10);
+    Vector3d dir = new Vector3d(0,0,1);
 
     public void runGameLoop() {
 
     }
 
     SigRenderer(JFrame f) {
-        tri = new Triangle(new Vector3d(-1,-1,0),new Vector3d(1,0,0),new Vector3d(0,2,0));
-        System.out.println(tri);   
-        System.out.println(tri.getNormal()); 
+        tri = new Triangle(new Vector3d(-1,-1,0),new Vector3d(1,-1,0),new Vector3d(0,2,0));
+        tri2 = new Triangle(new Vector3d(-1,-1,120),new Vector3d(1,-1,120),new Vector3d(0,2,120));
 
         Panel p = new Panel();
 
