@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener; 
 
 public class SigRenderer implements MouseListener,MouseMotionListener{
-    Vector3d vec;
+    Triangle tri;
     public final static int SCREEN_WIDTH=1280;
     public final static int SCREEN_HEIGHT=720;
     public final static long TIMEPERTICK = 16666667l;
@@ -17,8 +17,8 @@ public class SigRenderer implements MouseListener,MouseMotionListener{
     }
 
     SigRenderer(JFrame f) {
-        vec = new Vector3d();
-        System.out.println(vec);   
+        tri = new Triangle(new Vector3D(),new Vector3D(),new Vector3D());
+        System.out.println(tri);   
 
         Panel p = new Panel();
 
