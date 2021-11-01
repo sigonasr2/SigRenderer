@@ -12,4 +12,15 @@ public class Triangle {
     public String toString() {
         return "Triangle [A=" + A + ", B=" + B + ", C=" + C + "]";
     }
+
+    public Vector3d getNormal() {
+        Vector3d AB = (Vector3d)A.clone();
+        AB.sub(B);
+        Vector3d BC = (Vector3d)B.clone();
+        BC.sub(C);
+        Vector3d crossP = new Vector3d();
+        crossP.cross(AB,BC);
+        crossP.normalize();
+        return crossP;
+    }
 }
