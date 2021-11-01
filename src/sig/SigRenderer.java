@@ -1,17 +1,11 @@
 package sig;
 import javax.swing.JFrame;
-import javax.vecmath.Point2d;
-import javax.vecmath.Tuple3d;
-import javax.vecmath.Vector3f;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener; 
 import java.awt.event.MouseMotionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.Toolkit;
-import java.awt.Color;
 
 public class SigRenderer implements KeyListener,MouseListener,MouseMotionListener{
     public final static int SCREEN_WIDTH=1280;
@@ -20,7 +14,81 @@ public class SigRenderer implements KeyListener,MouseListener,MouseMotionListene
     public static float DRAWTIME=0;
     public static float DRAWLOOPTIME=0;
 
+    public static double x = 22;
+    public static double y = 12;
+    public static double dirX = -1;
+    public static double dirY = 0;
+    public static double planeX = 0;
+    public static double planeY = 0.66;
+    public static double moveSpeed = 0.01;
+    public static double rotSpeed = Math.PI/64;
+
+    boolean UP_KEY=false;
+    boolean DOWN_KEY=false;
+    boolean RIGHT_KEY=false;
+    boolean LEFT_KEY=false;
+
+    public static int[][] worldMap = new int[][]
+    {
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+      {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+      {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
+
     public void runGameLoop() {
+        if (UP_KEY) {
+            if (worldMap[(int)(x+dirX*moveSpeed)][(int)y]==0) {
+                x+=dirX*moveSpeed;
+            }
+            if (worldMap[(int)x][(int)(y+dirY*moveSpeed)]==0) {
+                y+=dirY*moveSpeed;
+            }
+        }
+        if (DOWN_KEY) {
+            if (worldMap[(int)(x-dirX*moveSpeed)][(int)y]==0) {
+                x-=dirX*moveSpeed;
+            }
+            if (worldMap[(int)x][(int)(y-dirY*moveSpeed)]==0) {
+                y-=dirY*moveSpeed;
+            }
+        }
+        if (LEFT_KEY) {
+            double oldDirX=dirX;
+            dirX=dirX*Math.cos(-rotSpeed)-dirY*Math.sin(-rotSpeed);
+            dirY=oldDirX*Math.sin(-rotSpeed)+dirY*Math.cos(-rotSpeed);
+            double oldPlaneX=planeX;
+            planeX=planeX*Math.cos(-rotSpeed)-planeY*Math.sin(-rotSpeed);
+            planeY=oldPlaneX*Math.sin(-rotSpeed)+planeY*Math.cos(-rotSpeed);
+        }
+        if (RIGHT_KEY) {
+            double oldDirX=dirX;
+            dirX=dirX*Math.cos(rotSpeed)-dirY*Math.sin(rotSpeed);
+            dirY=oldDirX*Math.sin(rotSpeed)+dirY*Math.cos(rotSpeed);
+            double oldPlaneX=planeX;
+            planeX=planeX*Math.cos(rotSpeed)-planeY*Math.sin(rotSpeed);
+            planeY=oldPlaneX*Math.sin(rotSpeed)+planeY*Math.cos(rotSpeed);
+        }
     }
 
     SigRenderer(JFrame f) {
@@ -102,11 +170,21 @@ public class SigRenderer implements KeyListener,MouseListener,MouseMotionListene
 
     @Override
     public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:{UP_KEY=true;}break;
+            case KeyEvent.VK_DOWN:{DOWN_KEY=true;}break;
+            case KeyEvent.VK_LEFT:{LEFT_KEY=true;}break;
+            case KeyEvent.VK_RIGHT:{RIGHT_KEY=true;}break;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:{UP_KEY=false;}break;
+            case KeyEvent.VK_DOWN:{DOWN_KEY=false;}break;
+            case KeyEvent.VK_LEFT:{LEFT_KEY=false;}break;
+            case KeyEvent.VK_RIGHT:{RIGHT_KEY=false;}break;
+        }
     }
 }
