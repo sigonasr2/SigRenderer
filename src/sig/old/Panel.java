@@ -1,4 +1,4 @@
-package sig;
+package sig.old;
 import javax.swing.JPanel;
 import javax.vecmath.Vector3f;
 
@@ -31,6 +31,12 @@ public class Panel extends JPanel{
                 }
             }
         }*/
+        for (Pixel p:SigRenderer.pixels) {
+            if (!g.getColor().equals(p.col)) {
+                g.setColor(p.col);
+            }
+            g.fillRect(p.x,p.y,(int)SigRenderer.RESOLUTION,(int)SigRenderer.RESOLUTION);
+        }
         endTime=System.nanoTime();
         SigRenderer.DRAWLOOPTIME = (endTime-startTime)/1000000f;
     }

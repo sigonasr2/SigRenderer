@@ -1,4 +1,4 @@
-package sig;
+package sig.old;
 import javax.vecmath.Vector3f;
 
 public class Triangle {

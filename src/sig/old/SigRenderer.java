@@ -1,4 +1,4 @@
-package sig;
+package sig.old;
 import javax.swing.JFrame;
 import javax.vecmath.Point2d;
 import javax.vecmath.Tuple3d;
@@ -14,16 +14,49 @@ import java.awt.Toolkit;
 import java.awt.Color;
 
 public class SigRenderer implements KeyListener,MouseListener,MouseMotionListener{
+    public static Triangle tri,tri2,tri3,tri4,tri5,tri6;
     public final static int SCREEN_WIDTH=1280;
     public final static int SCREEN_HEIGHT=720;
     public final static long TIMEPERTICK = 16666667l;
     public static float DRAWTIME=0;
     public static float DRAWLOOPTIME=0;
+    public static final float RESOLUTION=4;
+
+    Vector3f origin = new Vector3f(0,0,10);
+    public static float rot = (float)Math.PI/4; //In radians.
+
+    public static List<Pixel> pixels;
 
     public void runGameLoop() {
+        rot+=Math.PI/480d;
+        pixels = new ArrayList<>();
+        for (int x=0;x<SigRenderer.SCREEN_WIDTH/RESOLUTION;x++) {
+            for (int y=0;y<SigRenderer.SCREEN_HEIGHT/RESOLUTION;y++) {
+                Vector3f dir = new Vector3f((-SigRenderer.SCREEN_WIDTH/2f+x*RESOLUTION),(-SigRenderer.SCREEN_HEIGHT/2f+y*RESOLUTION),SigRenderer.SCREEN_WIDTH).dot;
+                if (SigRenderer.tri.rayTriangleIntersect(origin, dir)) {
+                    pixels.add(new Pixel((int)(SigRenderer.SCREEN_WIDTH-x*RESOLUTION),(int)(SigRenderer.SCREEN_HEIGHT-y*RESOLUTION),Color.BLACK));
+                }
+                if (SigRenderer.tri2.rayTriangleIntersect(origin, dir)) {
+                    pixels.add(new Pixel((int)(SigRenderer.SCREEN_WIDTH-x*RESOLUTION),(int)(SigRenderer.SCREEN_HEIGHT-y*RESOLUTION),Color.BLUE));
+                }
+                if (SigRenderer.tri3.rayTriangleIntersect(origin, dir)) {
+                    pixels.add(new Pixel((int)(SigRenderer.SCREEN_WIDTH-x*RESOLUTION),(int)(SigRenderer.SCREEN_HEIGHT-y*RESOLUTION),Color.RED));
+                }
+                if (SigRenderer.tri4.rayTriangleIntersect(origin, dir)) {
+                    pixels.add(new Pixel((int)(SigRenderer.SCREEN_WIDTH-x*RESOLUTION),(int)(SigRenderer.SCREEN_HEIGHT-y*RESOLUTION),Color.GREEN));
+                }
+            }
+        }
     }
 
     SigRenderer(JFrame f) {
+
+        tri = new Triangle(new Vector3f(-1,-1,0),new Vector3f(0,-1,0),new Vector3f(-1,0,0));
+        tri2 = new Triangle(new Vector3f(-1,0,0),new Vector3f(0,-1,0),new Vector3f(0,0,0));
+        tri3 = new Triangle(new Vector3f(0,0,0),new Vector3f(0,-1,0),new Vector3f(0,-1,-1));
+        tri4 = new Triangle(new Vector3f(0,-1,-1),new Vector3f(0,0,-1),new Vector3f(0,-1,0));
+        /*tri5 = new Triangle(new Vector3f(0,-1,0),new Vector3f(0,-1,-1),new Vector3f(0,0,0));
+        tri6 = new Triangle(new Vector3f(0,0,0),new Vector3f(0,-1,-1),new Vector3f(0,0,-1));*/
 
         Panel p = new Panel();
 
@@ -102,6 +135,20 @@ public class SigRenderer implements KeyListener,MouseListener,MouseMotionListene
 
     @Override
     public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:{
+                origin.add(new Vector3f(0,0,-1));
+            }break;
+            case KeyEvent.VK_RIGHT:{
+                origin.add(new Vector3f(1,0,0));
+            }break;
+            case KeyEvent.VK_LEFT:{
+                origin.add(new Vector3f(-1,0,0));
+            }break;
+            case KeyEvent.VK_DOWN:{
+                origin.add(new Vector3f(0,0,1));
+            }break;
+        }
     }
 
     @Override
